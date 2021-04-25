@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sketchy/bootstrap.min.css">
+    <title>Affichage Liste</title>
+</head>
+
+<body>
+{# Message de bienvenue #}
+{% for cle,message in app.session.flashBag.get('Welcome') %}
+<div class="alert alert-dismissible alert-info" style="text-align: center; margin: 10px 100px 10px 100px; ">
+    {{ message }}
+</div>
+{% endfor %}
+
+{# Message d'erreur #}
+{% for label,messages in app.flashes(['ErreurInitialisation','ErreurIntrouvable']) %}
+    {% for message in messages %}
+    <div class="alert alert-dismissible alert-danger" style="text-align: center; margin: 10px 100px 10px 100px; ">
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endfor %}
+
+{# Message de succès #}
+{% for label,messages in app.flashes(['SuccèsMAJ','ResetAvecInitialisation','SuccèsAjout','SuccèsSupression','SuccèsRest']) %}
+    {% for message in messages %}
+        <div class="alert alert-dismissible alert-success" style="text-align: center; margin: 10px 100px 10px 100px; ">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{# Affichage de la liste #}
+<div class="card border-primary mb-3" style="max-width: 100rem;  margin: 10px 100px 10px 100px;">
+    <div class="card-header" style="text-align: center"><h1>TO DO LIST</h1></div>
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+
+            {% for cle,description in app.session.get('ToDo') %}
+            <li class="list-group-item">{{ cle }}</br>
+                {{ description }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
